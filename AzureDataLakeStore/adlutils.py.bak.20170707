@@ -1,0 +1,182 @@
+import base64
+
+import fire
+from azure.datalake.store import lib, core, AzureDLFileSystem
+from azure.datalake.store.multithread import ADLUploader, ADLDownloader
+
+
+class ADLUtils(object):
+    # store login parameters in class scope for compare
+    _tenant_id = None
+    _store_name = None
+    _client_id = None
+    _client_secret = None
+    _encrypted = None
+
+    @classmethod
+    def _get_azure_data_lake_filesystem(cls, tenant_id, store_name, client_id, client_secret, encrypted):
+        # test if login parameter values change
+        identical_flag = True
+        if tenant_id != cls._tenant_id:
+            identical_flag = False
+            cls._tenant_id = tenant_id
+        if store_name != cls._store_name:
+            identical_flag = False
+            cls._store_name = store_name
+        if client_id != cls._client_id:
+            identical_flag = False
+            cls._client_id = client_id
+        if client_secret != cls._client_secret:
+            identical_flag = False
+            cls._client_secret = client_secret
+        if encrypted != cls._encrypted:
+            identical_flag = False
+            cls._encrypted = encrypted
+
+        # if identical AzureDLFileSystem should already hold an instance, we can reuse that one.
+        if identical_flag:
+            # print('current()')
+            return AzureDLFileSystem.current()
+        # if not definitely we need to create a new instance of AzureDLFileSystem.
+        else:
+            # handle encrypted parameters
+            if encrypted:
+                tenant_id = ADLUtils._b64decode(tenant_id)
+                store_name = ADLUtils._b64decode(store_name)
+                client_id = ADLUtils._b64decode(client_id)
+                client_secret = ADLUtils._b64decode(client_secret)
+            # print('new instance()')
+            token = lib.auth(tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
+            return core.AzureDLFileSystem(store_name=store_name, token=token)
+
+    def help(self):
+        help_doc = '''
+Azure Data Lake Store Utilities
+
+In case you have any questions please contact jerry.li@dnvgl.com
+
+Prerequisites:
+1. Install Python 3.6 or later version
+2. Install the libraries used in this script
+    pip install azure-datalake-store
+    pip install fire
+
+Common login parameters:
+--tenant_id         The Directory ID of Azure Active Directory of DNV GL
+--store_name        The name of the Azure Data Lake Store
+--client_id         The Application ID of the WebApp account
+--client_secret     The Key of the WebApp account
+--encrypted         If True, the values is supposed to be encrypted with utf-8 and base64 encoding. Defaults to False.
+
+function help       print help descriptions.
+command example:    adlutils.py help
+
+function version    print current version.
+command example:    adlutils.py version
+
+function list or ls list files and folders under the path.
+command example:    adlutils.py list or adlutils.py ls
+function list or ls has the following parameters:
+    --path      If not specified defaults to the root path of the data lake store.
+    command example: adlutils.py ls --path='/myfolder'
+    --detail    If True show the details of the files and folders under the path, defaults to False.
+    command example: adlutils.py ls --detail=True
+    --tenant_id
+    --store_name
+    --client_id
+    --client_secret
+    --encrypted
+    
+function download   download a single file from remote path to local path.
+command example:    adlutils.py download --lpath='local path' --rpath='remote path'
+    --lpath         local path
+    --rpath         remote path
+    --nthreads      number of threads to use, defaults to 64. If None, use the number of cores.
+    --buffersize    number of bytes for internal buffer, defaults to 2**22 which is 4194304
+    --blocksize     number of bytes for a block, defaults to 2**22 which is 4194304
+    --overwrite     whether to forcibly overwrite existing files/directories, defaults to True.
+    --tenant_id
+    --store_name
+    --client_id
+    --client_secret
+    --encrypted
+'''
+        print(help_doc)
+
+    def version(self):
+        print('1.0')
+
+    def ls(self, tenant_id='adf10e2b-b6e9-41d6-be2f-c12bb566019c', store_name='adljjlitest',
+           client_id='e649e5f4-0791-4447-9022-a4d3c6725f90',
+           client_secret='qE3Nb2Zvm4TLBIjI3+ueurEnFeTmBI13BGv/ItBZz/E=', path='', detail=False, encrypted=False):
+        # if encrypted:
+        #     tenant_id = ADLUtils._b64decode(tenant_id)
+        #     store_name = ADLUtils._b64decode(store_name)
+        #     client_id = ADLUtils._b64decode(client_id)
+        #     client_secret = ADLUtils._b64decode(client_secret)
+        # token = lib.auth(tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
+        # adl = core.AzureDLFileSystem(store_name=store_name, token=token)
+        adl = ADLUtils._get_azure_data_lake_filesystem(tenant_id, store_name, client_id, client_secret, encrypted)
+        if detail:
+            for item in adl.ls(path, detail):
+                print(item)
+        else:
+            print(adl.ls(path, detail))
+
+    def walk(self, tenant_id='adf10e2b-b6e9-41d6-be2f-c12bb566019c', store_name='adljjlitest',
+             client_id='e649e5f4-0791-4447-9022-a4d3c6725f90',
+             client_secret='qE3Nb2Zvm4TLBIjI3+ueurEnFeTmBI13BGv/ItBZz/E=', path='', encrypted=False):
+        # if encrypted:
+        #     tenant_id = ADLUtils._b64decode(tenant_id)
+        #     store_name = ADLUtils._b64decode(store_name)
+        #     client_id = ADLUtils._b64decode(client_id)
+        #     client_secret = ADLUtils._b64decode(client_secret)
+        # token = lib.auth(tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
+        # adl = core.AzureDLFileSystem(store_name=store_name, token=token)
+        adl = ADLUtils._get_azure_data_lake_filesystem(tenant_id, store_name, client_id, client_secret, encrypted)
+        print(adl.walk(''))
+
+    def du(self, tenant_id='adf10e2b-b6e9-41d6-be2f-c12bb566019c', store_name='adljjlitest',
+           client_id='e649e5f4-0791-4447-9022-a4d3c6725f90',
+           client_secret='qE3Nb2Zvm4TLBIjI3+ueurEnFeTmBI13BGv/ItBZz/E=', path='', deep=True, total=True,
+           encrypted=False):
+        # if encrypted:
+        #     tenant_id = ADLUtils._b64decode(tenant_id)
+        #     store_name = ADLUtils._b64decode(store_name)
+        #     client_id = ADLUtils._b64decode(client_id)
+        #     client_secret = ADLUtils._b64decode(client_secret)
+        # token = lib.auth(tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
+        # adl = core.AzureDLFileSystem(store_name=store_name, token=token)
+        adl = ADLUtils._get_azure_data_lake_filesystem(tenant_id, store_name, client_id, client_secret, encrypted)
+        print('Usage(bytes):', adl.du(path, total, deep))  # total bytes usage
+
+    def download(self, lpath, rpath, tenant_id='adf10e2b-b6e9-41d6-be2f-c12bb566019c', store_name='adljjlitest',
+                 client_id='e649e5f4-0791-4447-9022-a4d3c6725f90',
+                 client_secret='qE3Nb2Zvm4TLBIjI3+ueurEnFeTmBI13BGv/ItBZz/E=',
+                 nthreads=64, overwrite=True, buffersize=4194304,
+                 blocksize=4194304, encrypted=False):
+        # if encrypted:
+        #     tenant_id = ADLUtils._b64decode(tenant_id)
+        #     store_name = ADLUtils._b64decode(store_name)
+        #     client_id = ADLUtils._b64decode(client_id)
+        #     client_secret = ADLUtils._b64decode(client_secret)
+        # token = lib.auth(tenant_id=tenant_id, client_id=client_id, client_secret=client_secret)
+        # adl = core.AzureDLFileSystem(store_name=store_name, token=token)
+        adl = ADLUtils._get_azure_data_lake_filesystem(tenant_id, store_name, client_id, client_secret, encrypted)
+
+        ADLDownloader(adl, lpath=lpath, rpath=rpath,
+                      nthreads=nthreads, overwrite=overwrite, buffersize=buffersize, blocksize=blocksize)
+        print('{remote_path} has been downloaded to {local_path}.'.format(remote_path=rpath, local_path=lpath))
+
+    @staticmethod
+    def _b64decode(self, source):
+        b = base64.b64decode(source)
+        return b.decode('utf-8')
+
+    # ALIASES
+    list = ls
+
+
+if __name__ == '__main__':
+    fire.Fire(ADLUtils)
+    # ADLUtils().download(lpath='If_You_Forget_Me.txt', rpath='mynewfolder/If_You_Forget_Me.txt')
