@@ -1,0 +1,86 @@
+Kotlin (programming language)
+From Wikipedia, the free encyclopedia
+Kotlin
+Kotlin Logo
+Designed by	JetBrains
+Developer	JetBrains and open source contributors
+First appeared	2011
+Stable release	
+Kotlin 1.1.3 / June 23, 2017; 4 days ago[1]
+Typing discipline	static, inferred
+Platform	Outputs Java Virtual Machine bytecode and JavaScript source code
+OS	Any supporting a JVM or JavaScript interpreter
+License	Apache 2
+Filename extensions	.kt, .kts
+Website	kotlinlang.org
+Influenced by
+Java, Scala, Groovy, C#, Gosu, JavaScript, Swift
+Kotlin is a statically-typed programming language that runs on the Java Virtual Machine and also can be compiled to JavaScript source code or uses the LLVM compiler infrastructure. Its primary development is from a team of JetBrains programmers based in Saint Petersburg, Russia.[2] While the syntax is not compatible with Java, Kotlin is designed to interoperate with Java code and is reliant on Java code from the existing Java Class Library, such as the collections framework.
+
+The name comes from Kotlin Island, near St. Petersburg. Andrey Breslav mentioned that the team decided to name it after an island just like Java was named after the Indonesian island of Java.[3]
+
+Contents  [hide] 
+1	History
+2	Philosophy
+3	Syntax
+4	Semantics
+5	Tools
+6	Applications
+7	Adoption
+8	See also
+9	References
+10	External links
+History[edit]
+In July 2011 JetBrains unveiled Project Kotlin, a new language for the JVM, which had been under development for a year.[4] JetBrains lead Dmitry Jemerov said that most languages did not have the features they were looking for, with the exception of Scala. However, he cited the slow compile time of Scala as an obvious deficiency.[4] One of the stated goals of Kotlin is to compile as quickly as Java. In February 2012, JetBrains open sourced the project under the Apache 2 license.[5]
+
+JetBrains hopes that the new language will drive IntelliJ IDEA sales.[6]
+
+Kotlin v1.0 was released on February 15, 2016.[7] This is considered to be the first officially stable release and JetBrains has committed to long-term backwards compatibility starting with this version.
+
+At Google I/O 2017, Google announced first-class support for Kotlin on Android.[8]
+
+Philosophy[edit]
+Development lead Andrey Breslav has said that Kotlin is designed to be an industrial-strength object-oriented language, and a "better language" than Java, but still be fully interoperable with Java code, allowing companies to make a gradual migration from Java to Kotlin.[9]
+
+Syntax[edit]
+Kotlin variable declarations and parameter lists have the data type come after the variable name (and with a colon separator), similar to Pascal. As in Scala and Groovy, semicolons are optional as a statement terminator; in most cases a newline is sufficient for the compiler to deduce that the statement has ended.[10]
+
+Semantics[edit]
+In addition to the classes and methods (called member functions in Kotlin) of object-oriented programming, Kotlin also supports procedural programming with the use of functions.[11] As in C and C++, the entry point to a Kotlin program is a function named "main", which is passed an array containing any command line arguments. Perl and Unix/Linux shell script-style string interpolation is supported. Type inference is also supported.
+
+Hello, world! example
+
+1 fun main(args : Array<String>) {
+2   val scope = "world"
+3   println("Hello, $scope!")
+4 }
+Kotlin makes a distinction between nullable and non-nullable datatypes. All nullable objects must be declared with a "?" postfix after the type name. Operations on nullable objects need special care from developers: null-check must be performed before using the value. Kotlin provides null-safe operators to help developers:
+
+?. (safe navigation operator) can be used to safely access a method or property of a possibly null object. If the object is null, the method will not be called and the expression evaluates to null.
+?: (null coalescing operator) often referred to as the Elvis operator:
+fun sayHello(maybe : String?, neverNull : Int) {
+   // use of elvis operator
+   val name : String = maybe ?: "stranger"
+   println("Hello $name")
+}
+An example of the use of the safe navigation operator:
+
+  // returns null if foo() returns null, or if foo() is non-null, but bar() returns null, or foo() and bar() are non-null, but baz() returns null
+  // vice versa, return value is non-null if and only if foo(), bar() and baz() are non-null
+  foo() ?. bar() ?. baz()
+Tools[edit]
+IntelliJ IDEA has plug-in support for Kotlin.[12] IntelliJ IDEA 15 is the first version to bundle Kotlin plugin in the IntelliJ Installer, and provide support of it out of the box.[13]
+JetBrains also provides a plugin for Eclipse.[14][15]
+Integration with common Java build tools is supported including Apache Maven,[16] Apache Ant,[17] and Gradle.[18]
+Android Studio (based on IntelliJ IDEA) see https://developer.android.com/kotlin/index.html
+Applications[edit]
+One of the obvious applications of Kotlin is Android development. The platform was stuck on Java 7 for a while (with some contemporary language features made accessible through the use of Retrolambda[19] or the Jack toolchain[20]) and Kotlin introduces many improvements for programmers such as null-pointer safety, extension functions and infix notation. Accompanied by full Java compatibility and good IDE support (Android Studio[21]) it is intended to improve code readability, give an easier way to extend Android SDK classes and speed up development.[22]
+
+Kotlin was announced as an official Android development language at Google I/O 2017. It became the third language fully supported for Android, in addition to Java and C++.[23]
+
+Adoption[edit]
+According to the Kotlin website, Prezi is using Kotlin in the backend.[24] DripStat has done a writeup of their experience with Kotlin.[25]
+
+According to Jetbrains blog, Kotlin is used by Amazon Web Services, Pinterest, Coursera, Netflix, Uber, Square, Trello, Basecamp,[26] and others. Corda, a distributed ledger developed by a consortium of well-known banks (such as Goldman Sachs, Wells Fargo, J.P. Morgan, Deutsche Bank, UBS, HSBC, BNP Paribas, Soci¨¦t¨¦ G¨¦n¨¦rale), has over 90% Kotlin in its codebase. [27]
+
+According to Google, Kotlin has already been adopted by several major developers¡ªExpedia, Flipboard, Pinterest, Square, and others¡ªfor their Android production apps. [28]

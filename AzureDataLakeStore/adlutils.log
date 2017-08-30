@@ -1,0 +1,40 @@
+2017-08-11 12:59:35 PM INFO:Initializing Azure Data Lake utility...
+2017-08-11 12:59:35 PM INFO:Finished initialing Azure Data Lake utility.
+2017-08-11 12:59:35 PM INFO:Start building Azure Data Lake File System...
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - Authority:Performing instance discovery: https://login.microsoftonline.com/adf10e2b-b6e9-41d6-be2f-c12bb566019c
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - Authority:Performing static instance discovery
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - Authority:Authority validated via static instance discovery
+2017-08-11 12:59:35 PM INFO:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - TokenRequest:Getting token with client credentials.
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - TokenRequest:No user_id passed for cache query
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:finding with query: {"_clientId": "e649e5f4-0791-4447-9022-a4d3c6725f90"}
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:Looking for potential cache entries:
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:{"_clientId": "e649e5f4-0791-4447-9022-a4d3c6725f90"}
+2017-08-11 12:59:35 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:Found 0 potential entries.
+2017-08-11 12:59:35 PM DEBUG:Starting new HTTPS connection (1): login.microsoftonline.com
+2017-08-11 12:59:37 PM DEBUG:https://login.microsoftonline.com:443 "POST /adf10e2b-b6e9-41d6-be2f-c12bb566019c/oauth2/token?api-version=1.0 HTTP/1.1" 200 1335
+2017-08-11 12:59:37 PM INFO:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:Get Token Server returned this correlation_id: d07d6e7c-869e-46e8-a3d5-97430dcf6768
+2017-08-11 12:59:37 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:Adding entry AccessTokenId: b'E2x/Nq441mrH5tWRfxyQQ/lTAkyEyC2svlOEU2dSorQ='
+2017-08-11 12:59:37 PM DEBUG:d07d6e7c-869e-46e8-a3d5-97430dcf6768 - OAuth2Client:Added entry is MRRT
+2017-08-11 12:59:37 PM INFO:Finished building Azure Data Lake File System.
+2017-08-11 12:59:37 PM DEBUG:HTTP Request
+GET https://adljjlitest.azuredatalakestore.net/webhdfs/v1/a.txt
+LISTSTATUS 'a.txt' 
+
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USIsImtpZCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9hZGYxMGUyYi1iNmU5LTQxZDYtYmUyZi1jMTJiYjU2NjAxOWMvIiwiaWF0IjoxNTAyNDI3Mjc2LCJuYmYiOjE1MDI0MjcyNzYsImV4cCI6MTUwMjQzMTE3NiwiYWlvIjoiWTJGZ1lQQnkvZVIzWHZxWlpycWUyM1NYTDVPS0FRPT0iLCJhcHBpZCI6ImU2NDllNWY0LTA3OTEtNDQ0Ny05MDIyLWE0ZDNjNjcyNWY5MCIsImFwcGlkYWNyIjoiMSIsImVfZXhwIjoyNjI4MDAsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2FkZjEwZTJiLWI2ZTktNDFkNi1iZTJmLWMxMmJiNTY2MDE5Yy8iLCJvaWQiOiIxODY3YWVjMC0yMzQ2LTQyOGMtYjY1Ny01MWQ2ZDU0YzQ3NWYiLCJzdWIiOiIxODY3YWVjMC0yMzQ2LTQyOGMtYjY1Ny01MWQ2ZDU0YzQ3NWYiLCJ0aWQiOiJhZGYxMGUyYi1iNmU5LTQxZDYtYmUyZi1jMTJiYjU2NjAxOWMiLCJ2ZXIiOiIxLjAifQ.A6RjLv8Sje_7rWBHrRCPkNQ9eCF31Zbeq8U2kSpRcLGxPvUsyzqD0t_9wJ2U0fhN6FEVH0leS7d3_lcIuhbOF92ntGPl_69IHQkrIhsLVCouYM9X9x8Dbdxq_Gd0YOVRecesUPaG1nZWXvioNm2bRl2OihR4qi3SHfc3YdUwu9J1tcNZCpmHrLQVb7ZAe9d1OJPIlvf94jmMTNeOXXLAF9_Fxs-ZlCNeiMC8HPeAqIX2U3meJMJPNYEWP7iEvB-PSD64EaunSIBpqRZK5VlG4To-_8BpMxbspl-kUQv_n2OuXd0Q-JkWKiglY3iXmoqc73Bz9kM_OXqY2J95MIo_zQ
+x-ms-client-request-id: dfd6149a-7e51-11e7-8c67-a0a8cdbf92c5
+User-Agent: python/3.6.1 (Windows-7-6.1.7601-SP1) azure.datalake.store.lib/0.0.12 Azure-Data-Lake-Store-SDK-For-Python
+2017-08-11 12:59:37 PM DEBUG:Starting new HTTPS connection (1): adljjlitest.azuredatalakestore.net
+2017-08-11 12:59:38 PM DEBUG:https://adljjlitest.azuredatalakestore.net:443 "GET /webhdfs/v1/a.txt?OP=LISTSTATUS&api-version=2016-11-01 HTTP/1.1" 200 322
+2017-08-11 12:59:38 PM DEBUG:HTTP Response
+200
+Cache-Control: no-cache, no-cache, no-store, max-age=0
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+x-ms-request-id: 856ac42c-35b5-46da-b2c0-30ac69f5262a
+x-ms-webhdfs-version: 17.04.22.00
+Status: 0x0
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+Date: Fri, 11 Aug 2017 04:59:38 GMT
+Content-Length: 322
